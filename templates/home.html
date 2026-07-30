@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="bg-light grey_container">
+  <div class='gradient_bar text-center'>
+    <h1 class='text-white justdoitsign'><i class='user-select-none'>Just Do It!</i></h1>
+  </div>
+  <div class="container">
+    <div class="bd-masthead" id="content">
+
+      <div class="text-center mt-5 shadow bg-white" id='home_content'>
+        <h1 style='font-size: 3rem;'>Welcome{% if current_username %}, {{ current_username }}{% endif %}</h1>
+        <div class='container w-75'>
+          <p class='text-break'>
+            Aliquam interdum consectetur fringilla. Sed aliquet velit in libero imperdiet scelerisque. Nulla lobortis tellus vitae ligula pulvinar mattis. Donec in tempor libero. Curabitur at nibh vitae arcu viverra venenatis. Mauris pulvinar sem nisi, non consequat eros pretium vehicula. Praesent sit amet sollicitudin turpis
+          </p>
+        </div>
+        <a role="button" class="btn btn-outline-primary btn-lg" href="{{ url_for('create_todo_form') }}">Get Started</a>
+      </div>
+
+      <div class="row row-cols-1 row-cols-lg-3 text-center cards_row">
+
+      <div class="col card_col">
+        <div class="card shadow create_card">
+          <a class="text-decoration-none" href="{{ url_for('read_todos').include_query_params(filter_val='all', creation_date=-1) }}">
+          <div class="card-body">
+            <i class="fa-solid fa-calendar-plus fa_cards"></i>
+            <h1 class="card-title mt-3 text-muted">Create</h1>
+          </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col card_col">
+        <div class="card shadow edit_card">
+          <a class="text-decoration-none" href="{{ url_for('read_todos').include_query_params(filter_val='all', creation_date=-1) }}">
+          <div class="card-body">
+            <i class="fa-solid fa-square-pen fa_cards"></i>
+            <h1 class="card-title mt-3 text-muted">Edit</h1>
+          </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col card_col">
+        <div class="card shadow complete_card">
+          <a class="text-decoration-none" href="{{ url_for('read_todos').include_query_params(filter_val='all', creation_date=-1) }}">
+          <div class="card-body">
+            <i class="fa-solid fa-calendar-check fa_cards"></i>
+            <h1 class="card-title mt-3 text-muted">Complete</h1>
+          </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

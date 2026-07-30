@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}{{ todo.title }}{% endblock %}
+{% block content %}
+<div class="bg-light grey_container">
+  <div class="container">
+    <div class="bd-masthead" id="content">
+      <div class="container row justify-content-center todo_form_container">
+        <div class="col-md-5 mb-5">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1 h1">
+              {% if todo.completed_date %}<i class="fa-solid fa-check text-success"></i>{% endif %}
+              {% if todo.important %}<i class="fa-solid fa-exclamation text-danger"></i>{% endif %}
+              {{ todo.title }}
+            </div>
+            <div class="detail_date">
+              <p class="text-muted">{{ todo.last_update_date.strftime('%H:%M, %d.%m.%Y') }}</p>
+            </div>
+          </div>
+          <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <div class="form_generic mt-3">
+              <p class="text-secondary">{{ todo.description }}</p>
+            </div>
+            <div class="mt-3">
+              <a type="button" class="btn btn-outline-primary me-3 mb-3 view_todo_button" href="{{ url_for('edit_todo_form', todo_pk=todo.pk) }}"><i class="fa-solid fa-pen"></i> Edit</a>
+              {% if not todo.completed_date %}
+              <button type="button" class="btn btn-outline-success me-3 mb-3 view_todo_button" onclick="$('#complete').click()"><i class="fa-solid fa-check"></i> Complete</button>
+              {% endif %}
+            </div>
+          </form>
+          {% if todo.completed_date %}
+          <small class="text-success">Completed: {{ todo.completed_date.strftime('%H:%M, %d.%m.%Y') }}</small>
+          {% endif%}
+        </div>
+      </div>
+
+      {% if not todo.completed_date %}
+      <form method="POST" style="visibility: hidden;" action="{{ url_for('complete_todo', todo_pk=todo.pk) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" id="complete">Complete</button>
+      </form>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

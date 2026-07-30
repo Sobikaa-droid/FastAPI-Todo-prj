@@ -1,0 +1,96 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+
+# ========================
+# Database
+# ========================
+sql_app.db
+*.db
+*.sqlite3
+*.sqlite
+*.db-journal
+
+# PostgreSQL (if using local dev DB)
+postgres_data/
+pgdata/
+
+# ========================
+# Environment Variables
+# ========================
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*
+!.env.example
+secrets/
+credentials/
+config/secrets/
+
+# ========================
+# SSL/TLS Certificates
+# ========================
+certs/
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.cer
+
+# ========================
+# Docker & Container
+# ========================
+# Docker build artifacts
+.dockerignore
+.dockerenv
+
+# Docker volumes (if local)
+**/data/
+**/volumes/
+
+# ========================
+# Logs
+# ========================
+*.log
+logs/
+nginx/logs/
+nginx/access.log
+nginx/error.log
+docker_logs/
+*.log.*
+
+# ========================
+# IDE & Editor
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# OS Generated
+# ========================
+.directory
+*.lock
+*.pid
+*.sock
+
+# ========================
+# Alembic (not needed for this app without DB)
+# ========================
+alembic/
+alembic.ini

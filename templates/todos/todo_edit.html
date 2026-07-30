@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}{{ todo.title }}{% endblock %}
+{% block content %}
+<div class="bg-light grey_container">
+  <div class="container">
+    <div class="bd-masthead" id="content">
+      <div class="container row justify-content-center todo_form_container">
+        <div class="col-md-5 mb-5">
+          <div class="d-flex">
+          {% if todo.completed_date %}
+          <h1 class="flex-grow-1 text-success">Completed</h1>
+          {% else %}
+          <h1 class="flex-grow-1">Edit</h1>
+          {% endif %}
+          <div class="detail_date">
+            <small class="text-muted">Created: {{ todo.creation_date.strftime('%H:%M, %d.%m.%Y') }}</small>
+            <p><small class="text-muted">Last edit: {{ todo.last_update_date.strftime('%H:%M, %d.%m.%Y') }}</small></p>
+          </div>
+          </div>
+          <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <div class="form_generic">
+              <label for="InputTitle" class="form-label">Title</label>
+              <input type="text" class="form-control" id="InputTitle" value="{{ todo.title }}" name="title">
+            </div>
+            <div class="form_generic mt-3">
+              <label for="InputDescription" class="form-label">Description</label>
+              <input type="text" class="form-control" id="InputDescription" value="{{ todo.description if todo.description is not none else '' }}" name="description">
+            </div>
+            <div class="mt-3 form-check">
+              <input class="form-check-input" type="checkbox" id="CheckImportant" {% if todo.important %} checked {% endif %} name="important">
+              <label class="form-check-label" for="CheckImportant">Important</label>
+            </div>
+            <div class="mt-3">
+              <button type="submit" class="btn btn-outline-primary me-3 mb-3 view_todo_button"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+              <button type="button" class="btn btn-outline-danger me-3 mb-3 view_todo_button" onclick="$('#delete').click()"><i class="fa-solid fa-trash-can"></i> Delete</button>
+            </div>
+          </form>
+          {% if todo.completed_date %}
+          <small class="text-success">Completed: {{ todo.completed_date.strftime('%H:%M, %d.%m.%Y') }}</small>
+          {% endif%}
+        </div>
+      </div>
+
+      <form method="POST" style="visibility: hidden;" action="{{ url_for('delete_todo', todo_pk=todo.pk) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" id="delete">Delete</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

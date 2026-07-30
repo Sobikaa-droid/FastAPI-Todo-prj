@@ -1,0 +1,29 @@
+services:
+  test-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: test_db
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U test_user -d test_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  tests:
+    build: .
+    depends_on:
+      test-db:
+        condition: service_healthy
+    environment:
+      TEST_DATABASE_URL: postgresql+asyncpg://test_user:test_password@test-db:5432/test_db
+      ENVIRONMENT: test
+      DEBUG: "false"
+    volumes:
+      - ./tests/certs:/tests/certs
+      - .:/app
+    command: >
+      sh -c "pytest -s -v --cov=src --cov-report=term-missing"

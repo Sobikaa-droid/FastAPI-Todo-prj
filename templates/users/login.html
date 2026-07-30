@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 user_form d-flex justify-content-center">
+	<div class="mt-5">
+		<h1 class="mb-3 text-center">Log In</h1>
+		<form method="POST">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+			<div class="mb-3">
+			  <label>Username
+			  <input type="text" class="form-control" required placeholder="Username" name="username" value="{{username}}">
+			  </label>
+			</div>
+			<div class="mb-3">
+			  <label>Password
+			  <input type="password" class="form-control" required placeholder="Password" value="{{password}}" name="password">
+			  </label>
+			</div>
+			<button class="btn btn-primary w-100" type="submit">Submit</button>
+		</form>
+		<div class="text-center mt-3 mb-3">
+			<span class="text-muted">Don't have an account?</span>
+			<a class='text-decoration-none' href="{{ url_for('register_form') }}">Sign Up</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
