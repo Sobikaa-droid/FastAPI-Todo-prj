@@ -66,8 +66,8 @@ async def get_current_user(
     !!! Requires middleware to get new AT from state and set it as a cookie !!!
     Only use with routers that REQUIRE authentication.
     """
-    if hasattr(request.state, "current_user"):
-        return request.state.current_user
+    # if hasattr(request.state, "current_user"):
+    #     return request.state.current_user
     async def validate_token_and_user(token: str) -> User:
         payload = utils.decode_jwt(token)
         sub = payload.get("sub")
@@ -95,7 +95,7 @@ async def get_current_user(
                 detail="User account is deactivated",
             )
 
-        request.state.current_user = user
+        # request.state.current_user = user
         return user
     try:
         return await validate_token_and_user(access_token)
