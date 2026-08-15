@@ -12,11 +12,11 @@
             <div class="mb-3">
               <div class="form_generic">
                 <label for="InputTitle" class="form-label">Title</label>
-                <input type="text" class="form-control" id="InputTitle" name="title">
+                <input type="text" minlength="1" maxlength="128" required class="form-control" id="InputTitle" name="title">
               </div>
               <div class="form_generic mt-3">
-                <label for="InputDescription" class="form-label">Description</label>
-                <input type="text" class="form-control" id="InputDescription" name="description">
+                <label for="FormControlDescription" class="form-label">Description</label>
+                <textarea class="form-control" maxlength="5000" id="FormControlDescription" rows="6" name="description"></textarea>
               </div>
               <div class="mt-3 form-check">
                 <input class="form-check-input" type="checkbox" id="CheckImportant" name="important">

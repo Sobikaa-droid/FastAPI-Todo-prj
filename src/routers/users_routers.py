@@ -38,7 +38,6 @@ async def register(
     _csrf_valid: bool = Depends(csrf.validate_csrf),
 ):
     errors = []
-    logger.info("Returning register post request...")
 
     try:
         user_create_data = users_schemas.UserCreate(
@@ -73,7 +72,6 @@ def login_form(request: Request) -> HTMLResponse:
     context = {
         "request": request,
     }
-    logger.info("Rendering login form...")
     return csrf.csrf_html_response(request, "users/login.html", context, status_code=200)
 
 

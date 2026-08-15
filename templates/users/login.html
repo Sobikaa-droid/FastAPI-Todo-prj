@@ -11,12 +11,12 @@
 			<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 			<div class="mb-3">
 			  <label>Username
-			  <input type="text" class="form-control" required placeholder="Username" name="username" value="{{username}}">
+			  <input type="text" maxlength="32" minlength="3" class="form-control" required placeholder="Username" name="username" value="{{username}}">
 			  </label>
 			</div>
 			<div class="mb-3">
 			  <label>Password
-			  <input type="password" class="form-control" required placeholder="Password" value="{{password}}" name="password">
+			  <input type="password" maxlength="128" minlength="8" class="form-control" required placeholder="Password" value="{{password}}" name="password">
 			  </label>
 			</div>
 			<button class="btn btn-primary w-100" type="submit">Submit</button>
