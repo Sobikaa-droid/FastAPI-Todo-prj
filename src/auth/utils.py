@@ -83,7 +83,6 @@ def decode_jwt(
 ) -> Dict[str, Any]:
 
     if not token:
-        logger.error(f"❗ Missing JWT token")
         raise jwt_exceptions.JWTMissingError()
 
     if not public_key:
@@ -103,10 +102,8 @@ def decode_jwt(
             }
         )
     except jwt.ExpiredSignatureError:
-        logger.error(f"❗ JWT expired")
         raise jwt_exceptions.JWTExpiredError()
     except jwt.InvalidTokenError as e:
-        logger.error(f"❗ JWT invalid: {e}")
         raise jwt_exceptions.JWTInvalidError(str(e))
     except Exception as e:
         logger.error(f"❗ JWT decode failed: {e}")
