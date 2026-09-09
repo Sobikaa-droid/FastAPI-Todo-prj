@@ -21,3 +21,4 @@ sqlalchemy[asyncio]
 requests
 password-validator
 beautifulsoup4
+fastapi-sqlalchemy-monitor

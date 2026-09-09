@@ -6,7 +6,6 @@ from .config import settings
 
 DATABASE_URL = settings.database_url
 
-# TODO add database monitoring
 async_engine = create_async_engine(
     DATABASE_URL,
     echo=settings.debug,

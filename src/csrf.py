@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory=settings.templates_dir)
 
 
 def csrf_html_response(request: Request, template_path: str, context: dict, status_code: int) -> HTMLResponse:
-    """Adds csrf to a context and sets a cookie"""
+    """Adds csrf to a context, sets a cookie, and returns response."""
 
     csrf_token = secrets.token_urlsafe(32)
     context["csrf_token"] = csrf_token
@@ -31,7 +31,7 @@ def csrf_html_response(request: Request, template_path: str, context: dict, stat
 
 
 def get_csrf_from_response(response: Response):
-    """Gets value of <input type="hidden" name="csrf_token" value="{{ csrf_token }}">"""
+    """Gets value from input"""
     soup = BeautifulSoup(response.text, "html.parser")
     csrf_input = soup.find("input", {"name": "csrf_token"})
     csrf_token = csrf_input["value"]

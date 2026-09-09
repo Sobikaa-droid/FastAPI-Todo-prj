@@ -61,11 +61,12 @@ async def get_current_user(
     db: AsyncSession = Depends(get_db),
 ) -> Optional[User]:
     """
-    Gets current user with AT and stores it in state OR gets user through state.
+    Gets current user with AT and stores it in state.
     If AT cookie is expired/gone, uses RT cookie to set a new AT to state.
     !!! Requires middleware to get new AT from state and set it as a cookie !!!
     Only use with routers that REQUIRE authentication.
     """
+
     # if hasattr(request.state, "current_user"):
     #     return request.state.current_user
     async def validate_token_and_user(token: str) -> User:
@@ -127,7 +128,10 @@ async def get_optional_user(
     access_token: Optional[str] = Depends(get_access_token_from_cookie),
     db: AsyncSession = Depends(get_db),
 ) -> User | None:
-    """Only use with routers that DON'T require authentication."""
+    """
+    For routes where current user can be optional.
+    Only use with routers that DON'T require authentication.
+    """
     try:
         return await get_current_user(request=request, access_token=access_token, db=db)
     except HTTPException as e:

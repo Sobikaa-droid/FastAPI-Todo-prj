@@ -4,6 +4,8 @@ from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from fastapi_sqlalchemy_monitor import SQLAlchemyMonitor
+from fastapi_sqlalchemy_monitor.action import PrintStatistics, WarnMaxTotalInvocation
 
 from . import database, exc_handlers, middlewares
 from .routers import users_routers, todos_routers
@@ -41,9 +43,17 @@ app = start_application()
 
 
 # Middlewares
-app.middleware('http')(middlewares.catch_exceptions_middleware)
-app.middleware('http')(middlewares.add_security_headers_middleware)
-app.middleware('http')(middlewares.refresh_token_middleware)
+app.add_middleware(
+    SQLAlchemyMonitor,
+    engine=database.async_engine,
+    actions=[
+        PrintStatistics(),  # See query stats in console
+        WarnMaxTotalInvocation(max_invocations=10),  # Alert on >10 queries
+    ]
+)
+app.add_middleware(middlewares.CatchExceptionsMiddleware)
+app.add_middleware(middlewares.AddSecurityHeadersMiddleware)
+app.add_middleware(middlewares.RefreshAccessTokenMiddleware)
 
 
 # Routers
